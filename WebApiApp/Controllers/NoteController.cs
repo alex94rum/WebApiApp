@@ -13,4 +13,11 @@ public class NoteController(INoteService noteService) : ControllerBase
         await noteService.CreateAsync(text);
         return NoContent();
     }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetByIdAsync([FromRoute]int id)
+    {
+        var result = await noteService.GetByIdAsync(id);
+        return Ok(result);
+    }
 }

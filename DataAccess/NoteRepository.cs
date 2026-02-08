@@ -1,4 +1,6 @@
-﻿namespace DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DataAccess;
 
 internal class NoteRepository(AppContext context) : INoteRepository
 {
@@ -7,5 +9,10 @@ internal class NoteRepository(AppContext context) : INoteRepository
         note.Created = DateTime.UtcNow;
         await context.Notes.AddAsync(note, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<Note?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await context.Notes.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 }
