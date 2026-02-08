@@ -1,8 +1,10 @@
+using BussinessLogic;
 using DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDataAccess();
+builder.Services.AddBusinessLogic();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -18,9 +20,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
