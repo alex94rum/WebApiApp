@@ -15,7 +15,7 @@ public class NoteController(INoteService noteService) : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetByIdAsync([FromRoute]int id)
+    public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
     {
         var result = await noteService.GetByIdAsync(id);
         return Ok(result);
@@ -28,4 +28,10 @@ public class NoteController(INoteService noteService) : ControllerBase
         return NoContent();
     }
 
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Deletesync([FromRoute] int id)
+    {
+        await noteService.DeleteAsync(id);
+        return NoContent();
+    }
 }

@@ -22,4 +22,10 @@ internal class NoteRepository(AppContext context) : INoteRepository
         context.Notes.Update(note);
         await context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task DeleteAsync(Note note, CancellationToken cancellationToken = default)
+    {
+        context.Notes.Remove(note);
+        await context.SaveChangesAsync(cancellationToken);
+    }
 }

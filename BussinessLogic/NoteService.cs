@@ -38,4 +38,16 @@ internal class NoteService(INoteRepository noteRepository) : INoteService
         note.Text = newText;
         await noteRepository.UpdateAsync(note, cancellationToken);
     }
+
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+    {
+        var note = await noteRepository.GetByIdAsync(id, cancellationToken);
+
+        if (note is null)
+        {
+            throw new Exception("Записка не найдена");
+        }
+
+        await noteRepository.DeleteAsync(note, cancellationToken);
+    }
 }
