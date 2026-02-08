@@ -1,9 +1,4 @@
 ﻿using DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BussinessLogic;
 
@@ -29,5 +24,18 @@ internal class NoteService(INoteRepository noteRepository) : INoteService
         }
 
         return note.Text;
+    }
+
+    public async Task UpdateAsync(int id, string newText, CancellationToken cancellationToken = default)
+    {
+        var note = await noteRepository.GetByIdAsync(id, cancellationToken);
+
+        if (note is null)
+        {
+            throw new Exception("Записка не найдена");
+        }
+
+        note.Text = newText;
+        await noteRepository.UpdateAsync(note, cancellationToken);
     }
 }

@@ -15,4 +15,11 @@ internal class NoteRepository(AppContext context) : INoteRepository
     {
         return await context.Notes.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
+
+    public async Task UpdateAsync(Note note, CancellationToken cancellationToken = default)
+    {
+        note.Updated = DateTime.UtcNow;
+        context.Notes.Update(note);
+        await context.SaveChangesAsync(cancellationToken);
+    }
 }

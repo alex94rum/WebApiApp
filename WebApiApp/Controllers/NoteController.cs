@@ -20,4 +20,12 @@ public class NoteController(INoteService noteService) : ControllerBase
         var result = await noteService.GetByIdAsync(id);
         return Ok(result);
     }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateAsync([FromRoute] int id, [FromBody] string newText)
+    {
+        await noteService.UpdateAsync(id, newText);
+        return NoContent();
+    }
+
 }
